@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.13)
+set(PICO_BOARD waveshare_rp2040_zero)
+include(pico_sdk_import.cmake)
+project(sdcid_reader C CXX ASM)
+set(CMAKE_C_STANDARD 11)
+pico_sdk_init()
+
+add_executable(sdcid_reader main.c)
+pico_generate_pio_header(sdcid_reader ${CMAKE_CURRENT_LIST_DIR}/ws2812.pio)
+target_link_libraries(sdcid_reader pico_stdlib hardware_spi hardware_pio)
+pico_enable_stdio_usb(sdcid_reader 1)
+pico_enable_stdio_uart(sdcid_reader 0)
+pico_add_extra_outputs(sdcid_reader)
